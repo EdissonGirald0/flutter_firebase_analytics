@@ -1,13 +1,15 @@
+// Importa las bibliotecas necesarias para trabajar con Flutter y Firebase.
 import 'dart:async';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+// Importa archivos locales que contienen opciones de Firebase y la página de pestañas.
 import 'firebase_options.dart';
 import 'tabs_page.dart';
 
+// Función principal que inicializa la aplicación Flutter y Firebase.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -16,9 +18,11 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
+// Definición de la aplicación principal.
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+// Configuración básica de la aplicación, incluyendo el tema y el objeto FirebaseAnalytics.
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   static FirebaseAnalyticsObserver observer =
       FirebaseAnalyticsObserver(analytics: analytics);
@@ -40,6 +44,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// Página principal de la aplicación.
 class MyHomePage extends StatefulWidget {
   MyHomePage({
     Key? key,
@@ -56,19 +61,21 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+// Estado de la página principal que contiene lógica y funciones de prueba.
 class _MyHomePageState extends State<MyHomePage> {
+  // Mensaje que se mostrará en la interfaz de usuario.
   String _message = '';
-
+  // Función para actualizar el mensaje en la interfaz de usuario.
   void setMessage(String message) {
     setState(() {
       _message = message;
     });
   }
-
+ // Función para probar la configuración de parámetros predeterminados del evento.
   Future<void> _setDefaultEventParameters() async {
     if (kIsWeb) {
       setMessage(
-        '"setDefaultEventParameters()" No esta soportado en appWeb',
+        '"setDefaultEventParameters()" no es compatible en la plataforma web',
       );
     } else {
       // Only strings, numbers & null (longs & doubles for android, ints and doubles for iOS) are supported for default event parameters:
@@ -82,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setMessage('setDefaultEventParameters tuvo exito');
     }
   }
-
+// Función para probar el registro de un evento personalizado.
   Future<void> _sendAnalyticsEvent() async {
     // Only strings and numbers (longs & doubles for android, ints and doubles for iOS) are supported for GA custom event parameters:
     // https://firebase.google.com/docs/reference/ios/firebaseanalytics/api/reference/Classes/FIRAnalytics#+logeventwithname:parameters:
@@ -146,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
     await widget.analytics.resetAnalyticsData();
     setMessage('resetAnalyticsData tuvo éxito');
   }
-
+// Otras funciones de prueba para diferentes funciones de Firebase Analytics.
   AnalyticsEventItem itemCreator() {
     return AnalyticsEventItem(
       affiliation: 'affil',
@@ -284,7 +291,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     await widget.analytics.logTutorialBegin();
     await widget.analytics.logTutorialComplete();
-    await widget.analytics.logUnlockAchievement(id: 'toda la API de Firebase cubierta');
+    await widget.analytics
+        .logUnlockAchievement(id: 'toda la API de Firebase cubierta');
     await widget.analytics.logViewItem(
       currency: 'usd',
       value: 1000,
@@ -311,43 +319,43 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           MaterialButton(
             onPressed: _sendAnalyticsEvent,
-            child: const Text('Test logEvent'),
+            child: const Text('prueba Registro Evento'),
           ),
           MaterialButton(
             onPressed: _testAllEventTypes,
-            child: const Text('Test standard event types'),
+            child: const Text('Probar tipos de eventos estándar'),
           ),
           MaterialButton(
             onPressed: _testSetUserId,
-            child: const Text('Test setUserId'),
+            child: const Text('Conjunto de prueba UserId'),
           ),
           MaterialButton(
             onPressed: _testSetCurrentScreen,
-            child: const Text('Test setCurrentScreen'),
+            child: const Text('Conjunto de prueba Pantalla actual'),
           ),
           MaterialButton(
             onPressed: _testSetAnalyticsCollectionEnabled,
-            child: const Text('Test setAnalyticsCollectionEnabled'),
+            child: const Text('Conjunto de pruebas AnalyticsCollection habilitado'),
           ),
           MaterialButton(
             onPressed: _testSetSessionTimeoutDuration,
-            child: const Text('Test setSessionTimeoutDuration'),
+            child: const Text('set de prueba Duración del tiempo de espera '),
           ),
           MaterialButton(
             onPressed: _testSetUserProperty,
-            child: const Text('Test setUserProperty'),
+            child: const Text('Conjunto de prueba UserProperty'),
           ),
           MaterialButton(
             onPressed: _testAppInstanceId,
-            child: const Text('Test appInstanceId'),
+            child: const Text('set de prueva appInstanceId'),
           ),
           MaterialButton(
             onPressed: _testResetAnalyticsData,
-            child: const Text('Test resetAnalyticsData'),
+            child: const Text('Restablecimiento de pruebaAnalyticsData'),
           ),
           MaterialButton(
             onPressed: _setDefaultEventParameters,
-            child: const Text('Test setDefaultEventParameters'),
+            child: const Text('Conjunto de prueba DefaultEventParameters'),
           ),
           Text(
             _message,
